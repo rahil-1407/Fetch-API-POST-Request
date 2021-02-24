@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>fetch api</h1>
+    <form id="myForm">
+        <input type="text" name="username">
+        <input type="password" name="password">
+        <button type="submit">Submit it</button>
+    </form>
+    <button id="mybtn">Post it</button>
+
+    <script>
+        document.getElementById("myForm").onsubmit = (e)=>{
+            e.preventDefault();
+
+            var data = new URLSearchParams();
+            console.log(e.target)
+
+            for(const pair of new FormData(e.target)){
+              console.log(pair)
+              data.append(pair[0],pair[1])
+            }
+
+            const url = "http://localhost:3000/sent-data"
+            fetch(url,{
+                method : "post",
+                body : data
+            }).then((res) =>{
+                return res.json()
+            }).then((res2) =>{
+                console.log(res2)
+            })
+        }
+    </script>
+</body>
+</html>
